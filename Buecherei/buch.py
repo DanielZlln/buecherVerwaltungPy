@@ -11,4 +11,5 @@ class Buch():
         self.verfuegbare_exemplare = verfuegbare_exemplare
 
     def info(self):
-        print(f"Das Buch: {self.titel} ist von {self.autor} und hat noch {self.verfuegbare_exemplare} verfügbare Exemplare")
+        print(f"Das Buch: {self.titel} ist von {self.autor} und hat noch {self.verfuegbare_exemplare} verfügbare Exemplare." +
+              f"Für die reservierung, gib diese ID an: {self.buchId}")
