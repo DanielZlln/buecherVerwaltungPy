@@ -26,6 +26,21 @@ class ReservierungVerwaltung():
             if res.mitgliedsnummer == mitgliedsnummer:
                 res.info()
 
+
+#  Das Buch muss richtig ausgewählt werden!!!!!!!!
+
+
+
+    def zeige_alle_reservierungen_storno(self, mitgliedsnummer, id_storno):
+        for count, res in reversed(list(enumerate(self.reservierungen))):
+            print(count, res)
+            if res.mitgliedsnummer == mitgliedsnummer:
+                for buch in self.buch_verwaltung.buecher:
+                    if res.titel == buch.titel:
+                        print(f"{buch.titel} mit der ID {buch.buchId} ist aktuell reserviert")
+                        del self.reservierungen[count]
+                        break
+
     def reserviere_buch(self, id, mitgliednummer):
         kein_buch = True
 

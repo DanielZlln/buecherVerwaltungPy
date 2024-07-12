@@ -52,7 +52,13 @@ def main():
                 reservierung_verwaltung.zeige_alle_reservierungen(mit_nummer)
 
             elif var == "c":
-                print("Reservierung stornieren")
+                try:
+                    print("Welches Buch soll storniert werden?")
+                    id_res = int(input("Gib die ID des Buches ein: "))
+                    reservierung_verwaltung.zeige_alle_reservierungen_storno(mit_nummer, id_res)
+  
+                except ValueError:
+                    print("Ungültige Eingabe. Bitte gib eine numerische ID ein.")
 
             elif var == "d":
                 print("Speichern")
