@@ -8,7 +8,7 @@ def main():
 
     buch_verwaltung = BuchVerwaltung()
     mitglied_verwaltung = MitgliedVerwaltung()
-    reservierung_verwaltung = ReservierungVerwaltung()
+    reservierung_verwaltung = ReservierungVerwaltung(buch_verwaltung)
 
 
     buch_verwaltung.lese_buecher_aus_csv("buecher.csv")
@@ -20,36 +20,48 @@ def main():
     userName = input("Bitte Namen eingeben: ")
     passwort = input("Bitte Passwort eingeben: ")
 
-    login = login_verwaltung.login(userName, passwort)
+    mitglied = login_verwaltung.login(userName, passwort)
+    mit_nummer = mitglied.mitgliedsnummer
 
-    while(login):
+    if mitglied:
+        while True:
+            print("------------------------------------------")
+            print("Wähle eines der Folgenden Menüs aus: \n" + 
+                "a) Buch reservieren \n" +
+                "b) Meine Reservierungen anzeigen \n" +
+                "c) Reservierung stornieren \n" +
+                "d) Speichern \n" +
+                "e) Beenden")
 
-        print("Wähle eines der Folgenden Menüs aus: \n" + 
-              "a) Buch reservieren \n" +
-              "b) Meine Reservierungen anzeigen \n" +
-              "c) Reservierung stornieren \n" +
-              "d) Speichern \n" +
-              "e) Beenden")
+            var = input("Welches Menü möchtest du aufrufen: ").lower()
 
-        var = input("Welches Menü möchtest du aufrufen: ").lower()
+            if var == "a":
+                print("Buch reservieren")
+                buch_verwaltung.zeige_alle_buecher()
 
-        if var == "a":
-            print("Buch reservieren")
-            buch_verwaltung.zeige_alle_buecher()
+                print("Welches Buch soll reserviert werden?")
 
-        elif var == "b":
-            print("Meine Reservierungen anzeigen")
-            reservierung_verwaltung.zeige_alle_reservierungen()
+                try:
+                    id_res = int(input("Gib die ID des Buches ein: "))
+                    reservierung_verwaltung.reserviere_buch(id_res, mit_nummer)
+                except ValueError:
+                    print("Ungültige Eingabe. Bitte gib eine numerische ID ein.")
 
-        elif var == "c":
-            print("Reservierung stornieren")
+            elif var == "b":
+                print("Meine Reservierungen anzeigen")
+                reservierung_verwaltung.zeige_alle_reservierungen(mit_nummer)
 
-        elif var == "d":
-            print("Speichern")
+            elif var == "c":
+                print("Reservierung stornieren")
 
-        elif var == "e":
-            print("Beenden")
-            break
+            elif var == "d":
+                print("Speichern")
+
+                reservierung_verwaltung.schreibe_reservierung_csv("reservierungen.csv")
+
+            elif var == "e":
+                print("Beenden")
+                break
 
 
 if __name__ == "__main__":

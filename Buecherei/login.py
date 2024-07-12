@@ -13,4 +13,7 @@ class Login():
             if mitglied.vorname == userName and mitglied.passwort == passwort:
                 print(f"Gefundenes Mitglied: {mitglied.vorname} {mitglied.nachname}")
 
-                return True
+                return mitglied
+        
+        print("Logindaten falsch!")
+        return None
